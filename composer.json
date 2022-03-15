@@ -1,0 +1,28 @@
+{
+  "name": "mestre-dos-codigos/michel-bol",
+  "description": "Execution of teste Mestre dos Códigos",
+  "keywords": [],
+  "type": "project",
+  "require": {
+    "php": "^8.1",
+    "phpunit/phpunit": "^8.5"
+  },
+  "autoload": {},
+  "autoload-dev": {},
+  "extra": {
+    "laravel": {
+      "dont-discover": [
+      ]
+    }
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit tests"
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
