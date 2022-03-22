@@ -19,7 +19,7 @@ class Expression
 
     public function __construct(string $expression)
     {
-        $this->originalExpression = $expression;
+        $this->originalExpression = trim($expression);
 
         $this->hasPlus = strpos($expression, ExpressionEnum::PLUS) > 0;
 
