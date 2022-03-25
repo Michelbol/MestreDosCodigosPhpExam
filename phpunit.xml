@@ -34,7 +34,4 @@
             <directory suffix=".php">variables</directory>
         </include>
     </coverage>
-        <logging>
-            <log type="coverage-html" target="html"/>
-        </logging>
 </phpunit>
