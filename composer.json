@@ -20,7 +20,9 @@
       "Palindrome\\\\": "palindrome",
       "SuperGlobal\\": "superglobal",
       "TroubleArray\\": "trouble-array",
-      "Variables\\": "variables"
+      "Variables\\": "variables",
+      "SecretSalt\\": "secret-salt",
+      "PimpMyLog\\": "pimp-my-log"
     }
   },
   "autoload-dev": {

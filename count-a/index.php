@@ -49,3 +49,9 @@ function pluralWord(): string
     return 'palavra';
 }
 
+
+if(isset($argv[1]) && isset($argv[2])){
+    $word = $argv[1];
+    $size = $argv[2];
+    echo countA($word, $size);
+}

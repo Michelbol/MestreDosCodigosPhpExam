@@ -42,4 +42,15 @@ class CountATest extends TestCase
         );
     }
 
+
+    public function testTerminalCall()
+    {
+        global $argv;
+        $argv[1] = 'cachorro';
+        $argv[2] = 2;
+        include_once('./count-a/index.php');
+        $this->expectOutputString(
+            "Existem 1 letra 'a' na string ca.",
+        );
+    }
 }
