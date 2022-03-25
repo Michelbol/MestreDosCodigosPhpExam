@@ -1,8 +1,8 @@
 <?php
 
-require_once('calculator/ExpressionEnum.php');
-require_once('calculator/SubExpression.php');
-require_once('calculator/ExpressionComplexityEnum.php');
+namespace Calculator;
+
+use Exception;
 
 class Expression
 {
@@ -17,7 +17,7 @@ class Expression
     /**
      * @return string
      */
-    public function calcExpression(): string
+    public function calc(): string
     {
         $this->resolvePrecedenceOperators();
         $this->resolveNormalOperators();
@@ -35,14 +35,14 @@ class Expression
                         $subExpression->calcAndContinue();
                     }
                     $subExpression->startOperation();
-                    $subExpression->setOperation(ExpressionEnum::PLUS);
+                    $subExpression->setOperation(new Plus());
                     break;
                 case ExpressionEnum::MINUS:
                     if($subExpression->isOpenOperation()){
                         $subExpression->calcAndContinue();
                     }
                     $subExpression->startOperation();
-                    $subExpression->setOperation(ExpressionEnum::MINUS);
+                    $subExpression->setOperation(new Minus());
                     break;
                 default:
                     if($subExpression->isOpenOperation()){
@@ -62,7 +62,7 @@ class Expression
 
     private function replaceResult(SubExpression $subExpression, $expression): array|string
     {
-        return str_replace($subExpression->toString(), $subExpression->getResult(), $expression);
+        return str_replace($subExpression, $subExpression->getResult(), $expression);
     }
 
     private function resolvePrecedenceOperators()
@@ -78,7 +78,7 @@ class Expression
                         $subExpression->resetSecondNumber();
                     }
                     $subExpression->startOperation();
-                    $subExpression->setOperation(ExpressionEnum::MULTIPLICATION);
+                    $subExpression->setOperation(new Multi());
                     break;
                 case ExpressionEnum::DIV:
                     if($subExpression->isOpenOperation()){
@@ -87,7 +87,7 @@ class Expression
                         $subExpression->resetSecondNumber();
                     }
                     $subExpression->startOperation();
-                    $subExpression->setOperation(ExpressionEnum::DIV);
+                    $subExpression->setOperation(new Div());
                     break;
                 case ExpressionEnum::PLUS:
                 case ExpressionEnum::MINUS:

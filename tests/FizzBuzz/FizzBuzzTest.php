@@ -1,6 +1,6 @@
 <?php
 
-namespace FizzBuzz;
+namespace Tests\FizzBuzz;
 
 use PHPUnit\Framework\TestCase;
 

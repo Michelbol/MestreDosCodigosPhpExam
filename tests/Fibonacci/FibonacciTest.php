@@ -1,6 +1,6 @@
 <?php
 
-namespace Fibonacci;
+namespace Tests\Fibonacci;
 
 use PHPUnit\Framework\TestCase;
 

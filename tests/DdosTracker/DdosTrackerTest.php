@@ -1,6 +1,6 @@
 <?php
 
-namespace DdosTracker;
+namespace Tests\DdosTracker;
 
 use PHPUnit\Framework\TestCase;
 

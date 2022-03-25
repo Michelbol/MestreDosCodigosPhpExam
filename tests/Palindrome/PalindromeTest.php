@@ -1,6 +1,6 @@
 <?php
 
-namespace Palindrome;
+namespace Tests\Palindrome;
 
 use PHPUnit\Framework\TestCase;
 

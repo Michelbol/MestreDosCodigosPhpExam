@@ -1,6 +1,6 @@
 <?php
 
-namespace TroubleArray;
+namespace Tests\TroubleArray;
 
 use PHPUnit\Framework\TestCase;
 

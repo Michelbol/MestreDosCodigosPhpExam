@@ -1,6 +1,6 @@
 <?php
 
-namespace ErrorInTry;
+namespace Tests\ErrorInTry;
 
 use PHPUnit\Framework\TestCase;
 

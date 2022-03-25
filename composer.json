@@ -8,8 +8,26 @@
     "phpunit/phpunit": "^9",
     "phpunit/php-code-coverage": "^9.1"
   },
-  "autoload": {},
-  "autoload-dev": {},
+  "autoload": {
+    "psr-4": {
+      "Atm\\": "atm/",
+      "Calculator\\": "calculator/",
+      "CountA\\": "count-a/",
+      "DdosTracker\\": "ddos-tracker",
+      "ErrorInTry\\": "error-in-try",
+      "Fibonacci\\": "fibonacci",
+      "FizzBuzz\\": "fizz-buzz",
+      "Palindrome\\\\": "palindrome",
+      "SuperGlobal\\": "superglobal",
+      "TroubleArray\\": "trouble-array",
+      "Variables\\": "variables"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "extra": {
     "laravel": {
       "dont-discover": [

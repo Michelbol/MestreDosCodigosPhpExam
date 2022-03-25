@@ -1,6 +1,6 @@
 <?php
 
-namespace CountA;
+namespace Tests\CountA;
 
 use PHPUnit\Framework\TestCase;
 

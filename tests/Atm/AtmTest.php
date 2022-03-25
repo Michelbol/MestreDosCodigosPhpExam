@@ -1,6 +1,6 @@
 <?php
 
-namespace Atm;
+namespace Tests\Atm;
 
 use PHPUnit\Framework\TestCase;
 

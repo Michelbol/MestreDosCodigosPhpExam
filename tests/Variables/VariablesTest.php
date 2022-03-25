@@ -1,6 +1,6 @@
 <?php
 
-namespace Variables;
+namespace Tests\Variables;
 
 use PHPUnit\Framework\TestCase;
 

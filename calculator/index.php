@@ -1,6 +1,9 @@
 <?php
-require_once('calculator/ExpressionEnum.php');
-require_once('calculator/SubExpression.php');
-require_once('calculator/ExpressionComplexityEnum.php');
 
+use Calculator\Expression;
+
+function expression($expression): string
+{
+    return (new Expression($expression))->calc();
+}
 

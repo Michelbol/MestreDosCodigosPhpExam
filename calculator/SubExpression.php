@@ -1,12 +1,16 @@
 <?php
 
+namespace Calculator;
+
+use Exception;
+
 class SubExpression
 {
     private string $firstNumber;
 
     private string $secondNumber;
 
-    private string $operation;
+    private Operation $operation;
 
     private string $result;
 
@@ -19,7 +23,7 @@ class SubExpression
         $this->secondNumber = "";
     }
 
-    public function toString(): string
+    public function __toString(): string
     {
         return "$this->firstNumber$this->operation$this->secondNumber";
     }
@@ -30,12 +34,7 @@ class SubExpression
      */
     public function calc()
     {
-        $this->result = match ($this->operation) {
-            ExpressionEnum::PLUS => $this->resolveSimplePlusExpression(),
-            ExpressionEnum::MINUS => $this->resolveSimpleMinusExpression(),
-            ExpressionEnum::MULTIPLICATION => $this->resolveSimpleMultiExpression(),
-            ExpressionEnum::DIV => $this->resolveSimpleDivExpression(),
-        };
+        $this->result = $this->operation->calc($this->firstNumber, $this->secondNumber);
     }
 
     public function calcAndContinue()
@@ -101,9 +100,9 @@ class SubExpression
     }
 
     /**
-     * @param string $operation
+     * @param Operation $operation
      */
-    public function setOperation(string $operation): void
+    public function setOperation(Operation $operation): void
     {
         $this->operation = $operation;
     }
@@ -123,34 +122,4 @@ class SubExpression
     {
         $this->result = $result;
     }
-
-
-    private function resolveSimplePlusExpression(): float
-    {
-        return floatval($this->firstNumber) + floatval($this->secondNumber);
-    }
-
-    private function resolveSimpleMinusExpression(): float
-    {
-        return floatval($this->firstNumber) - floatval($this->secondNumber);
-    }
-
-    /**
-     * @return float|int
-     * @throws Exception
-     */
-    private function resolveSimpleDivExpression(): float|int
-    {
-        $this->secondNumber = floatval($this->secondNumber);
-        if($this->secondNumber == 0){
-            throw new Exception("Erro de divisão por 0");
-        }
-        return floatval($this->firstNumber) / $this->secondNumber;
-    }
-
-    private function resolveSimpleMultiExpression(): float|int
-    {
-        return floatval($this->firstNumber) * floatval($this->secondNumber);
-    }
-
 }

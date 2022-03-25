@@ -1,5 +1,7 @@
 <?php
 
+namespace Calculator;
+
 class ExpressionEnum
 {
     const PLUS = '+';

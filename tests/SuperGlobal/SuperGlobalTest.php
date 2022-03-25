@@ -1,6 +1,6 @@
 <?php
 
-namespace SuperGlobal;
+namespace Tests\SuperGlobal;
 
 use PHPUnit\Framework\TestCase;
 
