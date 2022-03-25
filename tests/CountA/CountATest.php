@@ -19,6 +19,7 @@ class CountATest extends TestCase
 
     public function testCountASmaller()
     {
+        include_once('./count-a/index.php');
         /** Palavra menor */
         $this->assertEquals(
             "Existem 7 letras 'a' na palavra abaabaabaa.",
@@ -33,6 +34,7 @@ class CountATest extends TestCase
 
     public function testCountABigger()
     {
+        include_once('./count-a/index.php');
         /** Palavra maior */
         $this->assertEquals(
             "Existem 1 letra 'a' na string ca.",

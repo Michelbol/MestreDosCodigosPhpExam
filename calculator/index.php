@@ -1,11 +1,6 @@
 <?php
+require_once('calculator/ExpressionEnum.php');
+require_once('calculator/SubExpression.php');
+require_once('calculator/ExpressionComplexityEnum.php');
 
-
-function calculator(string $equation): float
-{
-
-    return 0.0;
-}
-
-//echo "\n".calculator("2+2")."\n";
 

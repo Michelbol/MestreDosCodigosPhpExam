@@ -13,7 +13,7 @@ function ddosTracker($attackerDate): string
             return $identifier;
         }
     }
-    return "";
+    return "Nenhuma zona foi encontrada";
 }
 
 function createFormattedDateByTimezone(string $timezone, $format = 'Y-m-d H:i:s'): string

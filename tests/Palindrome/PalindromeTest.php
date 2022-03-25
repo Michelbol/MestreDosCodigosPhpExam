@@ -10,6 +10,7 @@ class PalindromeTest extends TestCase
     {
         include_once("palindrome/index.php");
         $this->assertEquals('', palindrome('oihdasiosdaoiusadiuosad'));
+        $this->assertEquals('', palindrome(''));
     }
 
     public function testPalindromeTrue()

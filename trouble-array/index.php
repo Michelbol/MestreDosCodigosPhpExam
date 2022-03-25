@@ -10,15 +10,11 @@ function answerTroubleArray(): string
 
     $execution = troubleArray();
 
-    try {
-        $result = 'C';
-        foreach ($options as $index => $option){
-            if($execution === $option){
-                $result = $index;
-            }
+    $result = 'C';
+    foreach ($options as $index => $option){
+        if($execution === $option){
+            $result = $index;
         }
-    }catch (Exception $e){
-        $result = 'C';
     }
     echo $result;
     return $result;

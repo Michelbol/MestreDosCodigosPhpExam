@@ -1,110 +1,129 @@
 <?php
 
 require_once('calculator/ExpressionEnum.php');
+require_once('calculator/SubExpression.php');
 require_once('calculator/ExpressionComplexityEnum.php');
 
 class Expression
 {
-    public string $originalExpression;
-
-    public int $complexity;
-
-    public int $hasPlus;
-
-    public int $hasMinus;
-
-    public int $hasDiv;
-
-    public int $hasMulti;
+    private string $expression;
 
     public function __construct(string $expression)
     {
-        $this->originalExpression = trim($expression);
 
-        $this->hasPlus = strpos($expression, ExpressionEnum::PLUS) > 0;
-
-        $this->hasMinus = strpos($expression, ExpressionEnum::MINUS) > 0;
-
-        $this->hasDiv = strpos($expression, ExpressionEnum::DIV) > 0;
-
-        $this->hasMulti = strpos($expression, ExpressionEnum::MULTIPLICATION) > 0;
-
-        $this->calcComplexity();
+        $this->expression = str_replace(' ', '', $expression);
     }
 
-    private function calcComplexity(){
-        $complex = 0;
-        if($this->hasPlus){
-            $complex++;
-        }
-        if($this->hasMinus){
-            $complex++;
-        }
-        if($this->hasDiv){
-            $complex++;
-        }
-        if($this->hasMulti){
-            $complex++;
-        }
-        $this->complexity = $complex;
-    }
-
-    public function calcExpression(): float|int
+    /**
+     * @return string
+     */
+    public function calcExpression(): string
     {
-        if($this->complexity === ExpressionComplexityEnum::NUMBER){
-            return $this->resolveNumberExpression();
+        $this->resolvePrecedenceOperators();
+        $this->resolveNormalOperators();
+        return $this->expression;
+    }
+
+    private function resolveNormalOperators()
+    {
+        $resultExpression = $this->expression;
+        $subExpression = new SubExpression();
+        for ($i = 0; $i < strlen($this->expression); $i++){
+            switch ($this->expression[$i]){
+                case ExpressionEnum::PLUS:
+                    if($subExpression->isOpenOperation()){
+                        $subExpression->calcAndContinue();
+                    }
+                    $subExpression->startOperation();
+                    $subExpression->setOperation(ExpressionEnum::PLUS);
+                    break;
+                case ExpressionEnum::MINUS:
+                    if($subExpression->isOpenOperation()){
+                        $subExpression->calcAndContinue();
+                    }
+                    $subExpression->startOperation();
+                    $subExpression->setOperation(ExpressionEnum::MINUS);
+                    break;
+                default:
+                    if($subExpression->isOpenOperation()){
+                        $subExpression->concatSecondNumber($this->expression[$i]);
+                        break;
+                    }
+                    $subExpression->concatFirstNumber($this->expression[$i]);
+                    break;
+            }
         }
-        if($this->complexity === ExpressionComplexityEnum::SIMPLE){
-            return $this->resolveSimpleExpression();
+        if($subExpression->isOpenOperation()){
+            $subExpression->calc();
+            $resultExpression = $subExpression->getResult();
         }
-        return $this->resolveComplexExpression();
+        $this->expression = $resultExpression;
     }
 
-    private function resolveComplexExpression(): float
+    private function replaceResult(SubExpression $subExpression, $expression): array|string
     {
-        return 0;
+        return str_replace($subExpression->toString(), $subExpression->getResult(), $expression);
     }
 
-    private function resolveNumberExpression(): float
+    private function resolvePrecedenceOperators()
     {
-        return floatval($this->originalExpression);
-    }
-
-    private function resolveSimpleExpression(): float|int
-    {
-        if($this->hasPlus){
-            return $this->resolveSimplePlusExpression();
+        $resultExpression = $this->expression;
+        $subExpression = new SubExpression();
+        for ($i = 0; $i < strlen($this->expression); $i++){
+            switch ($this->expression[$i]){
+                case ExpressionEnum::MULTIPLICATION:
+                    if($subExpression->isOpenOperation()){
+                        $resultExpression = $this->resolveAndReplace($subExpression, $resultExpression);
+                        $subExpression->setFirstNumber($subExpression->getResult());
+                        $subExpression->resetSecondNumber();
+                    }
+                    $subExpression->startOperation();
+                    $subExpression->setOperation(ExpressionEnum::MULTIPLICATION);
+                    break;
+                case ExpressionEnum::DIV:
+                    if($subExpression->isOpenOperation()){
+                        $resultExpression = $this->resolveAndReplace($subExpression, $resultExpression);
+                        $subExpression->setFirstNumber($subExpression->getResult());
+                        $subExpression->resetSecondNumber();
+                    }
+                    $subExpression->startOperation();
+                    $subExpression->setOperation(ExpressionEnum::DIV);
+                    break;
+                case ExpressionEnum::PLUS:
+                case ExpressionEnum::MINUS:
+                    if($subExpression->isOpenOperation()){
+                        $resultExpression = $this->resolveAndReplace($subExpression, $resultExpression);
+                        $subExpression->setFirstNumber($subExpression->getResult());
+                        $subExpression->stopOperation();
+                        $subExpression->resetSecondNumber();
+                        break;
+                    }
+                    $subExpression->resetNumbers();
+                    $subExpression->stopOperation();
+                    break;
+                default:
+                    if($subExpression->isOpenOperation()){
+                        $subExpression->concatSecondNumber($this->expression[$i]);
+                        break;
+                    }
+                    $subExpression->concatFirstNumber($this->expression[$i]);
+                    break;
+            }
         }
-        if($this->hasMinus){
-            return $this->resolveSimpleMinusExpression();
+        if($subExpression->isOpenOperation()){
+            $resultExpression = $this->resolveAndReplace($subExpression, $resultExpression);
         }
-        if($this->hasDiv){
-            return $this->resolveSimpleDivExpression();
+        $this->expression = $resultExpression;
+    }
+
+    private function resolveAndReplace(SubExpression $subExpression, $resultExpression): array|string
+    {
+        try {
+            $subExpression->calc();
+        }catch (Exception $e){
+            $subExpression->setResult($e->getMessage());
+            return $subExpression->getResult();
         }
-        return $this->resolveSimpleMultiExpression();
-    }
-
-    private function resolveSimplePlusExpression(): float
-    {
-        $expressions = explode(ExpressionEnum::PLUS, $this->originalExpression);
-        return floatval($expressions[0]) + floatval($expressions[1]);
-    }
-
-    private function resolveSimpleMinusExpression(): float
-    {
-        $expressions = explode(ExpressionEnum::MINUS, $this->originalExpression);
-        return floatval($expressions[0]) - floatval($expressions[1]);
-    }
-
-    private function resolveSimpleDivExpression(): float|int
-    {
-        $expressions = explode(ExpressionEnum::DIV, $this->originalExpression);
-        return floatval($expressions[0]) / floatval($expressions[1]);
-    }
-
-    private function resolveSimpleMultiExpression(): float|int
-    {
-        $expressions = explode(ExpressionEnum::MULTIPLICATION, $this->originalExpression);
-        return floatval($expressions[0]) * floatval($expressions[1]);
+        return $this->replaceResult($subExpression, $resultExpression);
     }
 }
