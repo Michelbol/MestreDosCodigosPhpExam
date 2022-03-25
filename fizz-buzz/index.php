@@ -6,3 +6,6 @@ function fizzBuzz($number): string
 
     return $isFiz.$isBuzz === '' ? $number : $isFiz.$isBuzz;
 }
+if(isset($argv[1])){
+    echo fizzBuzz($argv[1]);
+}

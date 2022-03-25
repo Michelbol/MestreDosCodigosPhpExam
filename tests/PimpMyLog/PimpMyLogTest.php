@@ -33,4 +33,13 @@ class PimpMyLogTest extends TestCase
             pimpMyLog('123.123.123.123 - [10/Jan/2020:00:23:49 -0300] "POST /payment HTTP/1.0" Credit card 5124 1251 1223 2523, cvv 827, expiration date 09/22 had the payment refused"')
         );
     }
+    public function testTerminalCall()
+    {
+        global $argv;
+        $argv[1] = '123.123.123.123 - [10/Jan/2020:00:23:49 -0300] "POST /payment HTTP/1.0" Credit card 5124 1251 1223 2523, cvv 827, expiration date 09/22 had the payment refused"';
+        include_once('./pimp-my-log/index.php');
+        $this->expectOutputString(
+            '***.***.***.*** - [10/Jan/2020:00:23:49 -0300] "POST /payment HTTP/1.0" Credit card 5124 **** **** 2523, cvv ***, expiration date **/**** had the payment refused"',
+        );
+    }
 }

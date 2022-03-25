@@ -20,3 +20,8 @@ function createFormattedDateByTimezone(string $timezone, $format = 'Y-m-d H:i:s'
 {
     return (new DateTime("now", new DateTimeZone($timezone)))->format($format);
 }
+
+
+if(isset($argv[1])){
+    echo ddosTracker($argv[1]);
+}

@@ -14,3 +14,7 @@ function fibonacci($number): int
     }
     return $soma[$number];
 }
+
+if(isset($argv[1])){
+    echo fibonacci($argv[1]);
+}

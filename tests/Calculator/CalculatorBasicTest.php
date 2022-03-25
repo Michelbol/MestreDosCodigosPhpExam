@@ -10,6 +10,16 @@ use PHPUnit\Framework\TestCase;
 class CalculatorBasicTest extends TestCase
 {
 
+    public function testTerminalCall()
+    {
+        global $argv;
+        $argv[1] = "2+3";
+        include_once('./calculator/index.php');
+        $this->expectOutputString(
+            5,
+        );
+    }
+
     public function testIndex()
     {
         require_once "calculator/index.php";

@@ -42,4 +42,14 @@ class PalindromeTest extends TestCase
         $this->assertEquals($word, palindrome($word));
 
     }
+
+    public function testTerminalCall()
+    {
+        global $argv;
+        $argv[1] = 'subinoonibus';
+        include_once('./palindrome/index.php');
+        $this->expectOutputString(
+            "subinoonibus",
+        );
+    }
 }

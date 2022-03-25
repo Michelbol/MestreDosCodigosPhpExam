@@ -67,5 +67,13 @@ class AtmTest extends TestCase
             atm(1)
         );
     }
-
+    public function testTerminalCall()
+    {
+        global $argv;
+        $argv[1] = 1;
+        include_once('./atm/index.php');
+        $this->expectOutputString(
+            "[100 => 0, 50 => 0, 20 => 0, 10 => 0, 5 => 0, 1 => 1]",
+        );
+    }
 }

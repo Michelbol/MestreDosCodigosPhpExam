@@ -2,7 +2,6 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
          bootstrap="vendor/autoload.php"
-         cacheResultFile=".phpunit.cache/test-results"
          executionOrder="depends,defects"
          forceCoversAnnotation="false"
          beStrictAboutCoversAnnotation="true"
@@ -32,6 +31,7 @@
             <directory suffix=".php">superglobal</directory>
             <directory suffix=".php">trouble-array</directory>
             <directory suffix=".php">variables</directory>
+            <directory suffix=".php">pimp-my-log</directory>
         </include>
     </coverage>
 </phpunit>

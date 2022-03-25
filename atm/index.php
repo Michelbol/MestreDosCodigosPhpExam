@@ -26,3 +26,6 @@ function atm($withdrawAmount): string
 function formatReturn($return){
     return "[100 => $return[100], 50 => $return[50], 20 => $return[20], 10 => $return[10], 5 => $return[5], 1 => $return[1]]";
 }
+if(isset($argv[1])){
+    echo atm($argv[1]);
+}

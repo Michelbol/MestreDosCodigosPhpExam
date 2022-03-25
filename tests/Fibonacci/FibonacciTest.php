@@ -32,4 +32,13 @@ class FibonacciTest extends TestCase
         $this->assertEquals(21, fibonacci(8));
         $this->assertEquals(24157817, fibonacci(37));
     }
+    public function testTerminalCall()
+    {
+        global $argv;
+        $argv[1] = 37;
+        include_once('./fibonacci/index.php');
+        $this->expectOutputString(
+            24157817,
+        );
+    }
 }

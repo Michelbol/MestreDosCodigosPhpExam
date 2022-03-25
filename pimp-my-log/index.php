@@ -15,3 +15,7 @@ function pimpMyLog(string $log): string
     $log = preg_replace(CVV_REGEX, '$1 ***', $log);
     return preg_replace(EXPIRATION_REGEX, '$1 **/****', $log);
 }
+
+if(isset($argv[1])){
+    echo pimpMyLog($argv[1]);
+}

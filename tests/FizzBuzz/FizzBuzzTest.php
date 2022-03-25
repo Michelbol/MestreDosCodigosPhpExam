@@ -44,4 +44,14 @@ class FizzBuzzTest extends TestCase
             fizzBuzz(45)
         );
     }
+
+    public function testTerminalCall()
+    {
+        global $argv;
+        $argv[1] = 45;
+        include_once('./fizz-buzz/index.php');
+        $this->expectOutputString(
+            "FizzBuzz",
+        );
+    }
 }

@@ -15,3 +15,7 @@ function palindrome($word): string
     }
     return $word;
 }
+
+if(isset($argv[1])){
+    echo palindrome($argv[1]);
+}
